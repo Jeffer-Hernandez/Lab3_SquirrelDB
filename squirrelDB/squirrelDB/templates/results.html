@@ -1,0 +1,61 @@
+{% block content %} 
+<table>
+    <caption>Squirrels</caption>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Above Ground</th>
+        <th scope="col">Specific Location</th>
+        <th scope="col">Running</th>
+        <th scope="col">Chasing</th>
+        <th scope="col">Climbing</th>
+        <th scope="col">Eating</th>
+        <th scope="col">Foraging</th>
+        <th scope="col">Kuks</th>
+        <th scope="col">Quaas</th>
+        <th scope="col">Moans</th>
+        <th scope="col">Tail Flags</th>
+        <th scope="col">Tail Twitch</th>
+        <th scope="col">Approach</th>
+        <th scope="col">Runs Away</th>
+        <th scope="col">Indifferent</th>
+        <th scope="col">Hectare</th>
+        <th scope="col">Date</th>
+        <th scope="col">Shift</th>
+        <th scope="col">Age</th>
+        <th scope="col">Primary Color</th>
+        <th scope="col">Highlight Color</th>
+        <th scope="col">Special Notes</th>
+    </tr>
+    {% for row in results %}
+        <tr>
+            <th scope-"row">{{row.ID}}</th>
+            <th scope-"row">{{row.Above_Ground}}</th>
+            <th scope-"row">{{row.Specific_Location}}</th>
+            <th scope-"row">{{row.Running}}</th>
+            <th scope-"row">{{row.Chasing}}</th>
+            <th scope-"row">{{row.Climbing}}</th>
+            <th scope-"row">{{row.Eating}}</th>
+            <th scope-"row">{{row.Foraging}}</th>
+            <th scope-"row">{{row.Kuks}}</th>
+            <th scope-"row">{{row.Kuaas}}</th>
+            <th scope-"row">{{row.Moans}}</th>
+            <th scope-"row">{{row.Tail_Flag}}</th>
+            <th scope-"row">{{row.Tail_Twitch}}</th>
+            <th scope-"row">{{row.Approach}}</th>
+            <th scope-"row">{{row.Runs_Away}}</th>
+            <th scope-"row">{{row.Indifferent}}</th>
+            <th scope-"row">{{row.Hectare}}</th>
+            <th scope-"row">{{row.Date}}</th>
+            <th scope-"row">{{row.Shift}}</th>
+            <th scope-"row">{{row.Age}}</th>
+            <th scope-"row">{{row.Primary_Color}}</th>
+            <th scope-"row">{{row.Highlight_Color}}</th>
+            <th scope-"row">{{row.Special_Notes}}</th>
+        </tr>
+        
+    {% endfor%}
+    
+</table>
+    
+
+{% endblock %}

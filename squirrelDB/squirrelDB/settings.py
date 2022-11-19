@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+gcp_credential_path = "/Users/jeffhernandez/Desktop/Lab3_SquirrelDB/SquirrelDBSA.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcp_credential_path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'squirrelDB',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
