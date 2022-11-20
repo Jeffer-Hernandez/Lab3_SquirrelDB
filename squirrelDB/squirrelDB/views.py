@@ -46,7 +46,7 @@ def view_all(request):
 
 def create(request):
     if request.method=="GET":
-        return render(request, "create.html", context) 
+        return render(request, "create.html") 
     elif request.method=="POST":
         # if post save in db and send of to view all, including the newest entry
         id = request.POST.get("ID")
