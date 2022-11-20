@@ -1,4 +1,3 @@
-import json
 from google.cloud import bigquery
 from django.shortcuts import render, redirect
 
@@ -12,7 +11,6 @@ def view_all(request):
         """
         SELECT *
         FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB`
-        
         """
     )
     results = query_job.result()  
@@ -44,12 +42,10 @@ def view_all(request):
         res.append(row_copy)
 
     context["results"] = res
-
     return render(request, "results.html", context)
 
 def create(request):
     if request.method=="GET":
-        context = {}
         return render(request, "create.html", context) 
     elif request.method=="POST":
         # if post save in db and send of to view all, including the newest entry
@@ -107,7 +103,6 @@ def create(request):
         errors = client.insert_rows_json(
             "cisc3140-368419.Squirrel_Sightings.SquirrelDB", rows_to_insert, row_ids=[None] * len(rows_to_insert)
         ) 
-
         if errors == []:
             print("New rows have been added.")
         else:
@@ -120,18 +115,13 @@ def delete(request):
     elif request.method=="POST":
         print(request.POST.get("ID"))
         id = request.POST.get("ID")
-        query = """
-        DELETE FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB` WHERE ID = @id;
+        query = f"""
+        DELETE FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB` WHERE ID = {id};
         """
+        query_job = client.query(query)
 
-        job_config = bigquery.QueryJobConfig(
-            query_parameters=[
-                bigquery.ScalarQueryParameter("id", "INT64", id),
-            ]
-        )
-        
-        result = client.query(query, job_config=job_config) 
-        print(result.result())
+        # Wait for query job to finish.
+        query_job.result()
         return view_all(request)
 
 def update(request):
@@ -142,18 +132,14 @@ def update(request):
         id = request.POST.get("ID")
         context = {}
         row_dict = {}
-        query = """
+        query = f"""
         SELECT *
         FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB`
-        WHERE ID = @id;
+        WHERE ID = {id};
         """
+        query_job = client.query(query)
+        results = query_job.result()
 
-        job_config = bigquery.QueryJobConfig(
-            query_parameters=[
-                bigquery.ScalarQueryParameter("id", "INTEGER", id),
-            ]
-        )
-        results = client.query(query, job_config=job_config) 
         for row in results:
             row_dict["ID"] = row["ID"]
             row_dict["Above_Ground"] = row["Above_Ground"]
@@ -180,7 +166,7 @@ def update(request):
             row_dict["Special_Notes"] = row["Special_Notes"]
             context["entity"] = row_dict
         return render(request, "update.html", context)   
-    elif request.method=="POST" and "Above_Ground" in request.POST:
+    elif request.method=="POST" and "Special_Notes" in request.POST:
         id = request.POST.get("ID")
         Above_Ground = request.POST.get("Above_Ground")
         Specific_Location = request.POST.get("Specific_Location")
@@ -198,67 +184,44 @@ def update(request):
         Runs_Away = request.POST.get("Runs_Away")
         Indifferent = request.POST.get("Indifferent")
         Hectare = request.POST.get("Hectare")
-        Date = request.POST.get("Date")
         Shift = request.POST.get("Shift")
         Age = request.POST.get("Age")
         Primary_Color = request.POST.get("Primary_Color")
         Highlight_Color = request.POST.get("Highlight_Color")
         Special_Notes = request.POST.get("Special_Notes")
 
-        query = """
-            UPDATE "cisc3140-368419.Squirrel_Sightings.SquirrelDB"
-            SET 
-                Above_Ground = @Above_Ground,
-                Specific_Location = @Specific_Location,
-                Running = @Running,
-                Chasing = @Chasing,
-                Climbing = @Climbing,
-                Eating = @Eating,
-                Foraging = @Foraging,
-                Kuks = @Kuks,
-                Quaas = @Quaas,
-                Moans = @Moans,
-                Tail_Flags = @Tail_Flags,
-                Tail_Twitch = @Tail_Twitch,
-                Approach = @Approach,
-                Runs_Away = @Runs_Away,
-                Indifferent = @Indifferent,
-                Hectare = @Hectare,
-                Date = @Date,
-                Shift = @Shift,
-                Age = @Age,
-                Primary_Color = @Primary_Color,
-                Highlight_Color = @Highlight_Color,
-                Special_Notes = @Special_Notes
-            WHERE ID = @id;
+        query = f"""
+            UPDATE `cisc3140-368419.Squirrel_Sightings.SquirrelDB`
+            SET Above_Ground = {Above_Ground},
+                Specific_Location = "{Specific_Location}",
+                Running = {Running},
+                Chasing = {Chasing},
+                Climbing = {Climbing},
+                Eating = {Eating},
+                Foraging = {Foraging},
+                Kuks = {Kuks},
+                Quaas = {Quaas},
+                Moans = {Moans},
+                Tail_Flags = {Tail_Flags},
+                Tail_Twitch = {Tail_Twitch},
+                Approach = {Approach},
+                Runs_Away = {Runs_Away},
+                Indifferent = {Indifferent},
+                Hectare = {Hectare},
+                Shift = "{Shift}",
+                Age = "{Age}",
+                Primary_Color = "{Primary_Color}",
+                Highlight_Color = "{Highlight_Color}",
+                Special_Notes = "{Special_Notes}"
+            WHERE ID = {id};
         """
+        query_job = client.query(query)
 
-        job_config = bigquery.QueryJobConfig(
-            query_parameters=[
-                bigquery.ScalarQueryParameter("id", "INT64", id),
-                bigquery.ScalarQueryParameter("Above_Ground", "STRING", Above_Ground),
-                bigquery.ScalarQueryParameter("Specific_Location", "STRING", Specific_Location),
-                bigquery.ScalarQueryParameter("Running", "BOOL", Running),
-                bigquery.ScalarQueryParameter("Chasing", "BOOL", Chasing),
-                bigquery.ScalarQueryParameter("Climbing", "BOOL", Climbing),
-                bigquery.ScalarQueryParameter("Eating", "BOOL", Eating),
-                bigquery.ScalarQueryParameter("Foraging", "BOOL", Foraging),
-                bigquery.ScalarQueryParameter("Kuks", "BOOL", Kuks),
-                bigquery.ScalarQueryParameter("Quaas", "BOOL", Quaas),
-                bigquery.ScalarQueryParameter("Moans", "BOOL", Moans),
-                bigquery.ScalarQueryParameter("Tail_Flags", "BOOL", Tail_Flags),
-                bigquery.ScalarQueryParameter("Tail_Twitch", "BOOL", Tail_Twitch),
-                bigquery.ScalarQueryParameter("Approach", "BOOL", Approach),
-                bigquery.ScalarQueryParameter("Runs_Away", "BOOL", Runs_Away),
-                bigquery.ScalarQueryParameter("Indifferent", "BOOL", Indifferent),
-                bigquery.ScalarQueryParameter("Hectare", "INT64", Hectare),
-                bigquery.ScalarQueryParameter("Date", "INT64", Date),
-                bigquery.ScalarQueryParameter("Shift", "DATE", Shift),
-                bigquery.ScalarQueryParameter("Age", "STRING", Age),
-                bigquery.ScalarQueryParameter("Primary_Color", "STRING", Primary_Color),
-                bigquery.ScalarQueryParameter("Highlight_Color", "STRING", Highlight_Color),
-                bigquery.ScalarQueryParameter("Special_Notes", "STRING", Special_Notes),
-            ]
-        )
-        client.query(query, job_config=job_config) 
+        # Wait for query job to finish.
+        query_job.result()
+
+        assert query_job.num_dml_affected_rows is not None
+
+        print(f"DML query modified {query_job.num_dml_affected_rows} rows.")
         return redirect('view-all')
+
