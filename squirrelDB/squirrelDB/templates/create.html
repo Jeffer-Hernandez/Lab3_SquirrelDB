@@ -1,0 +1,75 @@
+{% block content %} 
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="ID">ID</label><br>
+        <input type="text" id="ID" name="ID"><br>
+
+        <label for="Above_Ground">Above Ground</label><br>
+        <input type="text" id="Above_Ground" name="Above_Ground"><br>
+
+        <label for="Specific_Location">Specific Location</label><br>
+        <input type="text" id="Specific_Location" name="Specific_Location"><br>
+
+        <label for="Running">Running</label><br>
+        <input type="text" id="Running" name="Running"><br>
+
+        <label for="Chaseing">Chasing</label><br>
+        <input type="text" id="Chasing" name="Chasing"><br>
+
+        <label for="Climbing">Climbing</label><br>
+        <input type="text" id="Climbing" name="Climbing"><br>
+
+        <label for="Eating">Eating</label><br>
+        <input type="text" id="Eating" name="Eating"><br>
+
+        <label for="Foraging">Foraging</label><br>
+        <input type="text" id="Foraging" name="Foraging"><br>
+
+        <label for="Kuks">Kuks</label><br>
+        <input type="text" id="Kuks" name="Kuks"><br>
+
+        <label for="Quaas">Quaas</label><br>
+        <input type="text" id="Quaas" name="Quaas"><br>
+
+        <label for="Moans">Moans</label><br>
+        <input type="text" id="Moans" name="Moans"><br>
+
+        <label for="Tail_Flags">Tail Flags</label><br>
+        <input type="text" id="Tail_Flags" name="Tail_Flags"><br>
+
+        <label for="Tail_Switch">Tail Twitch</label><br>
+        <input type="text" id="Tail_Switch" name="Tail_Switch"><br>
+
+        <label for="Approach">Approach</label><br>
+        <input type="text" id="Approach" name="Approach"><br>
+
+        <label for="Runs_Away">Runs Away</label><br>
+        <input type="text" id="Runs_Away" name="Runs_Away"><br>
+
+        <label for="Indifferent">Indifferent</label><br>
+        <input type="text" id="Indifferent" name="Indifferent"><br>
+
+        <label for="Hectare">Hectare</label><br>
+        <input type="text" id="Hectare" name="Hectare"><br>
+
+        <label for="Date">Date</label><br>
+        <input type="text" id="Date" name="Date"><br>
+
+        <label for="Shift">Shift</label><br>
+        <input type="text" id="Shift" name="Shift"><br>
+
+        <label for="Age">Age</label><br>
+        <input type="text" id="Age" name="Age"><br>
+
+        <label for="Primary_Color">Primary Color</label><br>
+        <input type="text" id="Primary_Color" name="Primary_Color"><br>
+
+        <label for="Highlight_Color">Highlight Color</label><br>
+        <input type="text" id="Highlight_Color" name="Highlight_Color"><br>
+
+        <label for="Special_Notes">Special Notes</label><br>
+        <input type="text" id="Special_Notes" name="Special_Notes"><br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}   
