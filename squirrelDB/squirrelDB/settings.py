@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-gcp_credential_path = "/Users/jeffhernandez/Desktop/SquirrelDBSA.json"
+gcp_credential_path = "/Users/jeffhernandez/Desktop/SquirrelDBCred.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcp_credential_path
 
 
