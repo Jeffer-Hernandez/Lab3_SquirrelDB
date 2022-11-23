@@ -10,7 +10,7 @@ def view_all(request):
     query_job = client.query(
         """
         SELECT *
-        FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB`
+        FROM `cisc3140-369315.SquirrelDB.Sightings`
         """
     )
     results = query_job.result()  
@@ -101,7 +101,7 @@ def create(request):
         ]
 
         errors = client.insert_rows_json(
-            "cisc3140-368419.Squirrel_Sightings.SquirrelDB", rows_to_insert, row_ids=[None] * len(rows_to_insert)
+            "cisc3140-369315.SquirrelDB.Sightings", rows_to_insert, row_ids=[None] * len(rows_to_insert)
         ) 
         if errors == []:
             print("New rows have been added.")
@@ -116,7 +116,7 @@ def delete(request):
         print(request.POST.get("ID"))
         id = request.POST.get("ID")
         query = f"""
-        DELETE FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB` WHERE ID = {id};
+        DELETE FROM `cisc3140-369315.SquirrelDB.Sightings` WHERE ID = {id};
         """
         query_job = client.query(query)
 
@@ -134,7 +134,7 @@ def update(request):
         row_dict = {}
         query = f"""
         SELECT *
-        FROM `cisc3140-368419.Squirrel_Sightings.SquirrelDB`
+        FROM `cisc3140-369315.SquirrelDB.Sightings`
         WHERE ID = {id};
         """
         query_job = client.query(query)
@@ -191,7 +191,7 @@ def update(request):
         Special_Notes = request.POST.get("Special_Notes")
 
         query = f"""
-            UPDATE `cisc3140-368419.Squirrel_Sightings.SquirrelDB`
+            UPDATE `cisc3140-369315.SquirrelDB.Sightings`
             SET Above_Ground = {Above_Ground},
                 Specific_Location = "{Specific_Location}",
                 Running = {Running},
